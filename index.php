@@ -10,9 +10,22 @@
 </head>
 
 <body>
+    <div>
+        <a href="https://www.yahoo.co.jp/">Yahoo Japan!</a>
+    </div>
+    <div>
+        <form action="https://www.google.com/search" method="get">
+            <input type="text" name="q">
+            <button>Google Search</button>
+        </form>
+    </div>
+
     <div class="bg-gray-200 flex justify-center items-center h-screen">
         <div class="calculator bg-white rounded p-8 shadow-md">
-            <input type="text" id="display" name="price" class="w-full mb-4 px-2 py-1 border rounded" readonly>
+            <form action="update.php" method="post">
+                <input type="text" id="display" name="price" class="w-full mb-4 px-2 py-1 border rounded" readonly>
+                <button class="btn" onclick="update()">計上</button>
+            </form>
             <div class="grid grid-cols-4 gap-4">
                 <button class="btn" onclick="addToDisplay('7')">7</button>
                 <button class="btn" onclick="addToDisplay('8')">8</button>
@@ -28,45 +41,43 @@
                 <button class="btn" onclick="calculate('*')">x</button>
                 <button class="btn" onclick="addToDisplay('0')">0</button>
                 <button class="btn" onclick="">Tax</button>
-                <form action="update.php" method="post">
-                    <button class="btn" onclick="update()">計上</button>
-                </form>
                 <button class="btn" onclick="calculateTotal()">=</button>
             </div>
             <div class="mt-5">
                 <a class="btn" href="sales/">売上</a>
             </div>
         </div>
+    </div>
 
-        <script>
-            var memory = "";
-            var operand = "";
+    <script>
+        var memory = "";
+        var operand = "";
 
-            function addToDisplay(value) {
-                memory += value;
-                updateDisplay();
-            }
+        function addToDisplay(value) {
+            memory += value;
+            updateDisplay();
+        }
 
-            function calculate(value) {
-                operand = value;
-                memory += value;
-            }
+        function calculate(value) {
+            operand = value;
+            memory += value;
+        }
 
-            function clearAll() {
-                memory = "";
-                updateDisplay();
-            }
+        function clearAll() {
+            memory = "";
+            updateDisplay();
+        }
 
-            function updateDisplay() {
-                document.getElementById('display').value = memory;
-            }
+        function updateDisplay() {
+            document.getElementById('display').value = memory;
+        }
 
-            function calculateTotal() {
-                var expression = document.getElementById('display').value;
-                var result = eval(expression);
-                document.getElementById('display').value = result;
-            }
-        </script>
+        function calculateTotal() {
+            var expression = document.getElementById('display').value;
+            var result = eval(expression);
+            document.getElementById('display').value = result;
+        }
+    </script>
 
     </div>
 </body>
