@@ -7,10 +7,10 @@ $posts = $_POST;
 // var_dump($posts);
 $price = $posts['price'];
 
-// TODO: 合計金額「sales.price」を保存するSQLを作成
+// 合計金額「sales.price」を保存するSQLを作成
 $sql = "INSERT INTO sales (price) VALUES ({$price});";
-var_dump($sql);
-// TODO: SQLを実行
-// TODO: レジ画面に戻る
+// SQLを実行
+$pdo->query($sql);
 
-// header('Location: index.php');
+// レジ画面に戻る（リダイレクト：ページ転送）
+header('Location: index.php');
