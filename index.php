@@ -35,7 +35,8 @@
                 <button class="btn" onclick="addToDisplay('3')">3</button>
                 <button class="btn" onclick="calculate('*')">x</button>
                 <button class="btn" onclick="addToDisplay('0')">0</button>
-                <button class="btn" onclick="">Tax</button>
+                <button class="btn" onclick="addToDisplay('00')">00</button>
+                <button class="btn" onclick="calculateTax()">Tax</button>
                 <button class="btn" onclick="calculateTotal()">=</button>
             </div>
         </div>
@@ -43,7 +44,7 @@
 
     <script>
         var memory = "";
-        var operand = "";
+        const TAX_RATE = 0.1;
 
         function addToDisplay(value) {
             memory += value;
@@ -51,7 +52,6 @@
         }
 
         function calculate(value) {
-            operand = value;
             memory += value;
         }
 
@@ -64,10 +64,15 @@
             document.getElementById('display').value = memory;
         }
 
+        function calculateTax() {
+            memory *= (1 + TAX_RATE);
+            memory = Math.round(memory);
+            updateDisplay();
+        }
+
         function calculateTotal() {
-            var expression = document.getElementById('display').value;
-            var result = eval(expression);
-            document.getElementById('display').value = result;
+            memory = eval(memory);
+            updateDisplay();
         }
     </script>
 
