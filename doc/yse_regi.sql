@@ -1,7 +1,6 @@
 CREATE TABLE sales (
     id bigint PRIMARY KEY AUTO_INCREMENT,
-    sales int NOT NULL,
-    sales_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    price int NOT NULL,
     created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at datetime NULL DEFAULT NULL
+    updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
