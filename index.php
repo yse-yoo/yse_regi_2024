@@ -7,6 +7,12 @@ if (isset($_SESSION[APP_KEY]['errors'])) {
     unset($_SESSION[APP_KEY]['errors']);
 }
 
+$message = "";
+if (isset($_SESSION[APP_KEY]['message'])) {
+    $message = $_SESSION[APP_KEY]['message'];
+    unset($_SESSION[APP_KEY]['message']);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +21,6 @@ if (isset($_SESSION[APP_KEY]['errors'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YSEレジ</title>
-    <!-- Tailwind CSSのCDNリンク -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
@@ -32,6 +37,9 @@ if (isset($_SESSION[APP_KEY]['errors'])) {
                         <?php endforeach ?>
                     </ul>
                 <?php endif ?>
+            </div>
+            <div class="p-3">
+                <?= $message ?>
             </div>
 
             <div class="d-flex w-full mt-3 mb-3">

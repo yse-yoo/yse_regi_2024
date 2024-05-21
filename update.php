@@ -25,4 +25,7 @@ function update($pdo, $posts)
     $sql = "INSERT INTO sales (price) VALUES (:price);";
     $stmt = $pdo->prepare($sql);
     $stmt->execute($posts);
+
+    $price = number_format($posts['price']);
+    $_SESSION[APP_KEY]['message'] = "売上 {$price} を計上しました";
 }
