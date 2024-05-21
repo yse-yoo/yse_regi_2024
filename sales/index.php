@@ -1,6 +1,6 @@
 <?php
 // データベースに接続
-require_once "../db.php";
+require_once "../app.php";
 
 function periodDate($year, $month)
 {

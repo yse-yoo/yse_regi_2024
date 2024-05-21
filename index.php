@@ -1,3 +1,13 @@
+<?php
+require_once "app.php";
+
+$errors = [];
+if (isset($_SESSION[APP_KEY]['errors'])) {
+    $errors = $_SESSION[APP_KEY]['errors'];
+    unset($_SESSION[APP_KEY]['errors']);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +22,18 @@
 <body>
     <div class="bg-gray-200 flex justify-center items-center h-screen">
         <div class="calculator bg-white rounded p-8 shadow-md">
+            <div id="errors">
+                <?php if ($errors) : ?>
+                    <ul>
+                        <?php foreach ($errors as $error) : ?>
+                            <li class="p-3">
+                                <span class="text-red-600"><?= $error ?></span>
+                            </li>
+                        <?php endforeach ?>
+                    </ul>
+                <?php endif ?>
+            </div>
+
             <div class="d-flex w-full mt-3 mb-3">
                 <form action="update.php" method="post">
                     <input type="text" id="display" name="price" class="w-full mb-4 px-2 py-1 border rounded" readonly>
@@ -22,61 +44,27 @@
                 </form>
             </div>
             <div class="grid grid-cols-4 gap-4">
-                <button class="btn" onclick="addToDisplay('7')">7</button>
-                <button class="btn" onclick="addToDisplay('8')">8</button>
-                <button class="btn" onclick="addToDisplay('9')">9</button>
+                <button class="btn" onclick="addNumber('7')">7</button>
+                <button class="btn" onclick="addNumber('8')">8</button>
+                <button class="btn" onclick="addNumber('9')">9</button>
                 <button class="btn" onclick="clearAll()">AC</button>
-                <button class="btn" onclick="addToDisplay('4')">4</button>
-                <button class="btn" onclick="addToDisplay('5')">5</button>
-                <button class="btn" onclick="addToDisplay('6')">6</button>
+                <button class="btn" onclick="addNumber('4')">4</button>
+                <button class="btn" onclick="addNumber('5')">5</button>
+                <button class="btn" onclick="addNumber('6')">6</button>
                 <button class="btn" onclick="calculate('+')">+</button>
-                <button class="btn" onclick="addToDisplay('1')">1</button>
-                <button class="btn" onclick="addToDisplay('2')">2</button>
-                <button class="btn" onclick="addToDisplay('3')">3</button>
+                <button class="btn" onclick="addNumber('1')">1</button>
+                <button class="btn" onclick="addNumber('2')">2</button>
+                <button class="btn" onclick="addNumber('3')">3</button>
                 <button class="btn" onclick="calculate('*')">x</button>
-                <button class="btn" onclick="addToDisplay('0')">0</button>
-                <button class="btn" onclick="addToDisplay('00')">00</button>
+                <button class="btn" onclick="addNumber('0')">0</button>
+                <button class="btn" onclick="addNumber('00')">00</button>
                 <button class="btn" onclick="calculateTax()">Tax</button>
                 <button class="btn" onclick="calculateTotal()">=</button>
             </div>
         </div>
     </div>
 
-    <script>
-        var memory = "";
-        const TAX_RATE = 0.1;
-
-        function addToDisplay(value) {
-            memory += value;
-            updateDisplay();
-        }
-
-        function calculate(value) {
-            memory += value;
-        }
-
-        function clearAll() {
-            memory = "";
-            updateDisplay();
-        }
-
-        function updateDisplay() {
-            document.getElementById('display').value = memory;
-        }
-
-        function calculateTax() {
-            memory *= (1 + TAX_RATE);
-            memory = Math.round(memory);
-            updateDisplay();
-        }
-
-        function calculateTotal() {
-            memory = eval(memory);
-            updateDisplay();
-        }
-    </script>
-
-    </div>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

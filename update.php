@@ -1,16 +1,28 @@
 <?php
-// データベースに接続
-require_once "db.php";
+require_once "app.php";
 
-// POSTデータを受け取る
-$posts = $_POST;
-// var_dump($posts);
-$price = $posts['price'];
+checkPostRequest();
 
-// 合計金額「sales.price」を保存するSQLを作成
-$sql = "INSERT INTO sales (price) VALUES ({$price});";
-// SQLを実行
-$pdo->query($sql);
+update($pdo, $_POST);
 
-// レジ画面に戻る（リダイレクト：ページ転送）
 header('Location: index.php');
+
+function checkPostRequest()
+{
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        exit;
+    }
+}
+
+function update($pdo, $posts)
+{
+    if (!is_numeric($posts['price'])) {
+        $errors['update'] = "売上計上できませんでした";
+        $_SESSION[APP_KEY]['errors'] = $errors;
+        return;
+    }
+
+    $sql = "INSERT INTO sales (price) VALUES (:price);";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($posts);
+}
